@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SimpleRssWidget</string>
+    <string name="title_settings_fragment">Настройки</string>
 </resources>
