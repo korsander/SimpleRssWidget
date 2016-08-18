@@ -5,7 +5,7 @@
     android:updatePeriodMillis="0"
     android:initialLayout="@layout/layout_rss_widget"
     android:resizeMode="horizontal|vertical"
-    android:configure="ru.korsander.simplersswidget.RSSWidgetConfigureActivity"
+    android:configure="ru.korsander.simplersswidget.ConfigurationActivity"
     android:widgetCategory="home_screen"
     >
 </appwidget-provider>

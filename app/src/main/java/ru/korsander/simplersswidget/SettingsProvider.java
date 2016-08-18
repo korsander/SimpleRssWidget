@@ -10,8 +10,9 @@ import android.preference.PreferenceManager;
 public class SettingsProvider {
     public static final String TAG = "SettingsProvider";
     public static final String PREFERENCE_INTERVAL = TAG + "_interval";
+    public static final String PREFERENCE_LAST_SUCCESS_UPDATE = TAG + "_last_success_update";
 
-    public static final int DEFAULT_UPDATE_INTERVAL = 60 * 1000;
+    public static final long DEFAULT_UPDATE_INTERVAL = 60 * 1000;
 
     private static SettingsProvider sInstance;
     private SharedPreferences mPreferences;
@@ -34,11 +35,15 @@ public class SettingsProvider {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public int getUpdateInterval() {
-        return mPreferences.getInt(PREFERENCE_INTERVAL, DEFAULT_UPDATE_INTERVAL);
+    public long getUpdateInterval() {
+        return mPreferences.getLong(PREFERENCE_INTERVAL, DEFAULT_UPDATE_INTERVAL);
     }
 
-    public void setUpdateInterval(int interval) {
-        mPreferences.edit().putInt(PREFERENCE_INTERVAL, interval).apply();
+    public void setUpdateInterval(long interval) {
+        mPreferences.edit().putLong(PREFERENCE_INTERVAL, interval).apply();
+    }
+
+    public long getLastSucessUpdate() {
+        return mPreferences.getLong(PREFERENCE_LAST_SUCCESS_UPDATE, 0);
     }
 }

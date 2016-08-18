@@ -43,7 +43,7 @@ public class RSSWidgetProvider extends AppWidgetProvider {
 
 
 
-    private void scheduleUpdate(Context context) {
+    public static void scheduleUpdate(Context context) {
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         final PendingIntent pendingIntent = getPendingIntent(context);
@@ -54,15 +54,17 @@ public class RSSWidgetProvider extends AppWidgetProvider {
                 pendingIntent);
     }
 
+    public static PendingIntent getPendingIntent(Context context) {
+        Intent intent = new Intent(context, RSSWidgetProvider.class);
+        intent.setAction(ACTION_UPDATE);
+        return PendingIntent.getBroadcast(context, 0, intent, 0);
+    }
+
+
+
     private void clearUpdate(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(getPendingIntent(context));
-    }
-
-    public PendingIntent getPendingIntent(Context context) {
-        Intent intent = new Intent(context, getClass());
-        intent.setAction(ACTION_UPDATE);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
 
     private void handleUpdate(Context context) {
