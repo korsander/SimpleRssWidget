@@ -17,7 +17,7 @@ public class ConfigurationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setResult(RESULT_CANCELED);
+        setResult(RESULT_OK); //TODO для теста. после реализации добавления адреса RSS ленты нужно поменять на cancel
 
         setContentView(R.layout.layout_configuration_activity);
 
@@ -45,6 +45,8 @@ public class ConfigurationActivity extends AppCompatActivity {
         if (mWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
+
+        replaceFragment(SettingsFragment.newInstance(this), SettingsFragment.TAG, false);
     }
 
     protected void replaceFragment(Fragment fragment, String tag, boolean allowBackStack) {
