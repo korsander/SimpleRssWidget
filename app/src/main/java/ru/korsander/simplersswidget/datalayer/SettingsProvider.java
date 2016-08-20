@@ -1,4 +1,4 @@
-package ru.korsander.simplersswidget;
+package ru.korsander.simplersswidget.datalayer;
 
 import android.content.Context;
 import android.content.SharedPreferences;

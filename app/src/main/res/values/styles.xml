@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="RssWidget">
+
+    </style>
+
+    <style name="RssWidget.Header">
+        <item name="android:background">@drawable/bg_widget_header</item>
+    </style>
+
+    <style name="RssWidget.Body">
+        <item name="android:background">@color/widget_background_body</item>
+    </style>
 </resources>

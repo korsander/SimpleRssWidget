@@ -8,6 +8,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
+import ru.korsander.simplersswidget.datalayer.SettingsProvider;
+
 /**
  * Created by korsander on 16.08.16.
  */

@@ -3,19 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="@style/RssWidget.Header"
         android:id="@+id/article_title_container">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:id="@+id/article_title"
-            android:layout_gravity="center_horizontal"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -27,6 +20,17 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:id="@+id/article_title"
+            android:layout_gravity="center_horizontal"
+            />
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,12 +40,13 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/article_body"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        style="@style/RssWidget.Body"/>
 
 </LinearLayout>
