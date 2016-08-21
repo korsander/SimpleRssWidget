@@ -3,7 +3,7 @@ package ru.korsander.simplersswidget.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-import ru.korsander.simplersswidget.RSSWidgetApplication;
+import ru.korsander.simplersswidget.businesslayer.RSSWidgetApplication;
 
 /**
  * Created by korsander on 20.08.16.
@@ -17,6 +17,7 @@ public class L {
     public static final char NEW_LINE = '\n';
 
     public static final String MESSAGE_ERROR_CACHE_INSTALLATION_FAILED = "HTTP response cache installation failed: ";
+    public static final String MESSAGE_WARNING_CANT_HANDLE_ACTION_PATTERN = "Can't handle action named \"%s\"";
 
     public static void v(String message) {
         v(null, message, null);

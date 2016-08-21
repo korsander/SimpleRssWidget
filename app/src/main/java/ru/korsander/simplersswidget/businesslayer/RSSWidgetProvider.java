@@ -1,4 +1,4 @@
-package ru.korsander.simplersswidget;
+package ru.korsander.simplersswidget.businesslayer;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

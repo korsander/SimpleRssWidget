@@ -1,4 +1,4 @@
-package ru.korsander.simplersswidget;
+package ru.korsander.simplersswidget.businesslayer.activities;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+
+import ru.korsander.simplersswidget.R;
+import ru.korsander.simplersswidget.businesslayer.framents.SettingsFragment;
 
 /**
  * Created by korsander on 16.08.16.

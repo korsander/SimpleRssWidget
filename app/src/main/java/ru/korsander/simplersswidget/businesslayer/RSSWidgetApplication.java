@@ -1,4 +1,4 @@
-package ru.korsander.simplersswidget;
+package ru.korsander.simplersswidget.businesslayer;
 
 import android.app.Application;
 import android.net.http.HttpResponseCache;

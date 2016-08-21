@@ -1,10 +1,12 @@
-package ru.korsander.simplersswidget;
+package ru.korsander.simplersswidget.businesslayer.framents;
 
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+
+import ru.korsander.simplersswidget.R;
 
 /**
  * Created by korsander on 18.08.16.
