@@ -13,7 +13,6 @@ public class Channel implements Parcelable{
     public String description;
     public String language;
     public String link;
-    public String image;
 
     protected ArrayList<Item> mItems = new ArrayList<>();
 
@@ -33,7 +32,6 @@ public class Channel implements Parcelable{
         description = in.readString();
         language = in.readString();
         link = in.readString();
-        image = in.readString();
         mItems = in.createTypedArrayList(Item.CREATOR);
     }
 
@@ -60,7 +58,6 @@ public class Channel implements Parcelable{
         dest.writeString(description);
         dest.writeString(language);
         dest.writeString(link);
-        dest.writeString(image);
         dest.writeTypedList(mItems);
     }
 }

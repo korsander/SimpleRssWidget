@@ -11,6 +11,7 @@ public class SettingsProvider {
     public static final String TAG = "SettingsProvider";
     public static final String PREFERENCE_INTERVAL = TAG + "_interval";
     public static final String PREFERENCE_LAST_SUCCESS_UPDATE = TAG + "_last_success_update";
+    public static final String PREFERENCE_RSS_URL = TAG + "_rss_url";
 
     public static final long DEFAULT_UPDATE_INTERVAL = 60 * 1000;
 
@@ -46,4 +47,13 @@ public class SettingsProvider {
     public long getLastSucessUpdate() {
         return mPreferences.getLong(PREFERENCE_LAST_SUCCESS_UPDATE, 0);
     }
+
+    public String getRSSUrl() {
+        return mPreferences.getString(PREFERENCE_RSS_URL, "https://lenta.ru/rss");
+    }
+
+    public void setUpdateInterval(String url) {
+        mPreferences.edit().putString(PREFERENCE_RSS_URL, url).apply();
+    }
+
 }

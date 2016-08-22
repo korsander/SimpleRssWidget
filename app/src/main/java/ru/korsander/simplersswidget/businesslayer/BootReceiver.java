@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
+import ru.korsander.simplersswidget.datalayer.NetworkService;
+
 /**
  * Created by korsander on 18.08.16.
  */
@@ -15,7 +17,7 @@ public class BootReceiver extends BroadcastReceiver {
         final AppWidgetManager manager = AppWidgetManager.getInstance(context);
         final int[] ids = manager.getAppWidgetIds(new ComponentName(context.getPackageName(), RSSWidgetProvider.class.getName()));
         if (ids.length > 0) {
-            RSSWidgetProvider.scheduleUpdate(context);
+            NetworkService.scheduleUpdate(context);
         }
     }
 }

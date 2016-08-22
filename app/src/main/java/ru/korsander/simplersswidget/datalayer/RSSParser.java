@@ -1,5 +1,6 @@
 package ru.korsander.simplersswidget.datalayer;
 
+import android.text.TextUtils;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -44,14 +45,18 @@ public class RSSParser {
         boolean done = false;
         while (eventType != XmlPullParser.END_DOCUMENT && !done) {
             String name = "";
+            String namespace = "";
             switch (eventType) {
                 case XmlPullParser.START_DOCUMENT:
                     L.d(TAG, "start parsing");
                     break;
                 case XmlPullParser.START_TAG:
                     name = parser.getName();
+                    namespace = parser.getNamespace();
                     if (name.equalsIgnoreCase(CHANNEL)) {
                         result = new Channel();
+                    } else if (!TextUtils.isEmpty(namespace) || name.equalsIgnoreCase(IMAGE)) {
+                        break;
                     } else if (name.equalsIgnoreCase(ITEM)) {
                         currentItem = new Item();
                     } else if (currentItem != null) {
@@ -122,10 +127,6 @@ public class RSSParser {
 
             case LINK:
                 channel.link = parser.nextText();
-                break;
-
-            case IMAGE:
-                channel.image = parser.nextText();
                 break;
 
             default:
