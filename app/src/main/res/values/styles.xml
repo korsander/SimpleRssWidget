@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -12,11 +12,43 @@
 
     </style>
 
+    <style name="RssWidget.Text">
+        <item name="android:textColor">@color/widget_text_color_black</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="RssWidget.Text.Title">
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="RssWidget.Text.ArticleTitle">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-medium</item>
+    </style>
+
+    <style name="RssWidget.Background">
+        <item name="android:background">@drawable/bg_widget</item>
+    </style>
+
     <style name="RssWidget.Header">
         <item name="android:background">@drawable/bg_widget_header</item>
     </style>
 
     <style name="RssWidget.Body">
         <item name="android:background">@color/widget_background_body</item>
+    </style>
+
+    <style name="RssWidget.Button">
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="RssWidget.Button.Left">
+        <item name="android:src">@drawable/ic_left_arrow</item>
+    </style>
+
+    <style name="RssWidget.Button.Right">
+        <item name="android:src">@drawable/ic_right_arrow</item>
     </style>
 </resources>
