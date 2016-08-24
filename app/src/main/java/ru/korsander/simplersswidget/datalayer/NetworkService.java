@@ -3,6 +3,7 @@ package ru.korsander.simplersswidget.datalayer;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -34,10 +35,11 @@ public class NetworkService extends IntentService {
         super(TAG);
     }
 
-    public static void startRSSLoading(Context context, String link) {
+    public static void startRSSLoading(Context context, String link, int widgetId) {
         Intent intent = new Intent(context, NetworkService.class);
         intent.setAction(ACTION_LOAD_RSS);
         intent.putExtra(EXTRA_RSS_LINK, link);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         context.startService(intent);
     }
 
@@ -48,8 +50,9 @@ public class NetworkService extends IntentService {
             switch (action) {
                 case ACTION_LOAD_RSS:
                     final String link = intent.getStringExtra(EXTRA_RSS_LINK);
-                    if (!TextUtils.isEmpty(link)) {
-                        handleRSSLoading(link);
+                    final int id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+                    if (!TextUtils.isEmpty(link) && id != AppWidgetManager.INVALID_APPWIDGET_ID) {
+                        handleRSSLoading(link, id);
                     }
                     break;
 
@@ -60,7 +63,7 @@ public class NetworkService extends IntentService {
         }
     }
 
-    private void handleRSSLoading(String link) {
+    private void handleRSSLoading(String link, int id) {
         try {
             final HttpURLConnection connection = NetworkHelper.openGetConnection(link);
             final Channel result = RSSParser.parse(new BufferedInputStream(connection.getInputStream()));
@@ -68,6 +71,7 @@ public class NetworkService extends IntentService {
             Intent intent = new Intent(getBaseContext(), RSSWidgetProvider.class);
             intent.setAction(ACTION_LOAD_RSS_COMPLETE);
             intent.putExtra(EXTRA_CHANNEL, result);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id);
             sendBroadcast(intent);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -78,10 +82,10 @@ public class NetworkService extends IntentService {
         }
     }
 
-    public static void scheduleUpdate(Context context) {
+    public static void scheduleUpdate(Context context, int widgetId) {
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        final PendingIntent pendingIntent = getPendingIntent(context);
+        final PendingIntent pendingIntent = getPendingIntent(context, widgetId);
         alarmManager.cancel(pendingIntent);
         alarmManager.setInexactRepeating(AlarmManager.RTC,
                 System.currentTimeMillis(),
@@ -89,17 +93,19 @@ public class NetworkService extends IntentService {
                 pendingIntent);
     }
 
-    public static PendingIntent getPendingIntent(Context context) {
+    public static PendingIntent getPendingIntent(Context context, int widgetId) {
         Intent intent = new Intent(context, NetworkService.class);
         intent.setAction(NetworkService.ACTION_LOAD_RSS);
         intent.putExtra(EXTRA_RSS_LINK, SettingsProvider.getInstance(context).getRSSUrl());
-        return PendingIntent.getService(context, 0, intent, 0);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        L.d(TAG, "getPending " + widgetId);
+        return PendingIntent.getService(context, widgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 
 
-    public static void clearUpdate(Context context) {
+    public static void clearUpdate(Context context, int widgetId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(getPendingIntent(context));
+        alarmManager.cancel(getPendingIntent(context, widgetId));
     }
 }

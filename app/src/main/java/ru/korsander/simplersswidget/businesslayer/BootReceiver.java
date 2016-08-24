@@ -16,8 +16,8 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         final AppWidgetManager manager = AppWidgetManager.getInstance(context);
         final int[] ids = manager.getAppWidgetIds(new ComponentName(context.getPackageName(), RSSWidgetProvider.class.getName()));
-        if (ids.length > 0) {
-            NetworkService.scheduleUpdate(context);
+        for (int id : ids) {
+            NetworkService.scheduleUpdate(context, id);
         }
     }
 }
