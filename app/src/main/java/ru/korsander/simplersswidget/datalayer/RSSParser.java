@@ -1,5 +1,6 @@
 package ru.korsander.simplersswidget.datalayer;
 
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Xml;
 
@@ -83,7 +84,7 @@ public class RSSParser {
     protected static void handleItem(XmlPullParser parser, String name, Item item) throws IOException, XmlPullParserException {
         switch (name) {
             case TITLE:
-                item.title = parser.nextText();
+                item.title = Html.fromHtml(parser.nextText()).toString();
                 break;
 
             case GUID:
@@ -95,7 +96,7 @@ public class RSSParser {
                 break;
 
             case DESC:
-                item.description = parser.nextText();
+                item.description = Html.fromHtml(parser.nextText()).toString();
                 break;
 
             case LINK:

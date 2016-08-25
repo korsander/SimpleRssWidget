@@ -49,8 +49,9 @@ public class NetworkService extends IntentService {
             final String action = intent.getAction();
             switch (action) {
                 case ACTION_LOAD_RSS:
-                    final String link = intent.getStringExtra(EXTRA_RSS_LINK);
                     final int id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+                    final String link = SettingsProvider.getInstance(getApplicationContext()).getRSSUrl(id);
+
                     if (!TextUtils.isEmpty(link) && id != AppWidgetManager.INVALID_APPWIDGET_ID) {
                         handleRSSLoading(link, id);
                     }
@@ -96,9 +97,7 @@ public class NetworkService extends IntentService {
     public static PendingIntent getPendingIntent(Context context, int widgetId) {
         Intent intent = new Intent(context, NetworkService.class);
         intent.setAction(NetworkService.ACTION_LOAD_RSS);
-        intent.putExtra(EXTRA_RSS_LINK, SettingsProvider.getInstance(context).getRSSUrl());
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        L.d(TAG, "getPending " + widgetId);
         return PendingIntent.getService(context, widgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 

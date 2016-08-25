@@ -48,8 +48,12 @@ public class SettingsProvider {
         return mPreferences.getLong(PREFERENCE_LAST_SUCCESS_UPDATE, 0);
     }
 
-    public String getRSSUrl() {
-        return mPreferences.getString(PREFERENCE_RSS_URL, "https://lenta.ru/rss");
+    public void setRSSUrl(int widgetId, String url) {
+        mPreferences.edit().putString(PREFERENCE_RSS_URL + widgetId, url).apply();
+    }
+
+    public String getRSSUrl(int widgetId) {
+        return mPreferences.getString(PREFERENCE_RSS_URL + widgetId, null);
     }
 
     public void setUpdateInterval(String url) {

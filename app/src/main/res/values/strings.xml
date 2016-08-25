@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Simple RSS widget</string>
     <string name="title_settings_fragment">Настройки</string>
+    <string name="title_link_dialog">Введите RSS ссылку</string>
+    <string name="title_ok">OK</string>
+    <string name="text_example">Например: </string>
+    <string name="text_example_lenta">https://lenta.ru/rss</string>
 </resources>

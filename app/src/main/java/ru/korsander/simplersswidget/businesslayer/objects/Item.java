@@ -3,6 +3,9 @@ package ru.korsander.simplersswidget.businesslayer.objects;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 /**
  * Created by korsander on 20.08.16.
  */
@@ -13,6 +16,12 @@ public class Item implements Parcelable {
     public String description;
     public String link;
     public String pubDate;
+
+    protected static final SimpleDateFormat mExternal =
+            new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
+
+    protected static final SimpleDateFormat mInternal =
+            new SimpleDateFormat("HH:mm:ss dd.MM.yyyy");
 
     public Item() {
 
@@ -53,4 +62,13 @@ public class Item implements Parcelable {
             return new Item[size];
         }
     };
+
+    public String getFormatedDateTime() {
+        try {
+            return mInternal.format(mExternal.parse(pubDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return pubDate;
+    }
 }

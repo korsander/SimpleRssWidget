@@ -18,7 +18,7 @@
     </style>
 
     <style name="RssWidget.Text.Title">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>

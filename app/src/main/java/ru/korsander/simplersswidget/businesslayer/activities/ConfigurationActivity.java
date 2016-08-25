@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import ru.korsander.simplersswidget.R;
 import ru.korsander.simplersswidget.businesslayer.framents.SettingsFragment;
+import ru.korsander.simplersswidget.datalayer.SettingsProvider;
 
 /**
  * Created by korsander on 16.08.16.
@@ -20,11 +22,11 @@ public class ConfigurationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setResult(RESULT_OK); //TODO для теста. после реализации добавления адреса RSS ленты нужно поменять на cancel
+        setResult(RESULT_CANCELED);
 
         setContentView(R.layout.layout_configuration_activity);
 
-        if (getIntent() == null) {
+        if (getIntent() != null) {
             handleIntent(false);
         }
     }
@@ -35,7 +37,18 @@ public class ConfigurationActivity extends AppCompatActivity {
         handleIntent(true);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!TextUtils.isEmpty(SettingsProvider.getInstance(this).getRSSUrl(mWidgetId))) {
+            setResult(RESULT_OK);
+        }
 
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            super.onBackPressed();
+        } else {
+            finish();
+        }
+    }
 
     protected void handleIntent(boolean isFromNewIntent) {
         final Intent intent = getIntent();
@@ -49,7 +62,7 @@ public class ConfigurationActivity extends AppCompatActivity {
             finish();
         }
 
-        replaceFragment(SettingsFragment.newInstance(this), SettingsFragment.TAG, false);
+        replaceFragment(SettingsFragment.newInstance(this, mWidgetId), SettingsFragment.TAG, false);
     }
 
     protected void replaceFragment(Fragment fragment, String tag, boolean allowBackStack) {

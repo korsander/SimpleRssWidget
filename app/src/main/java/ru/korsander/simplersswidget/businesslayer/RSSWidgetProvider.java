@@ -55,10 +55,10 @@ public class RSSWidgetProvider extends AppWidgetProvider {
             L.d("id = " + id + " position = " + position);
 
             if (channel != null) {
-                views.setTextViewText(R.id.widget_title, String.format(WIDGET_TITLE_PATTERN, position, channel.getItems().size(), channel.title));
+                views.setTextViewText(R.id.widget_title, String.format(WIDGET_TITLE_PATTERN, position + 1, channel.getItems().size(), channel.title));
                 final Item item = channel.getItems().get(position);
                 views.setTextViewText(R.id.title, item.title);
-                views.setTextViewText(R.id.time, item.pubDate);
+                views.setTextViewText(R.id.time, item.getFormatedDateTime());
                 views.setTextViewText(R.id.desription, item.description);
                 views.setOnClickPendingIntent(R.id.button_left, getClickIntent(context, ClickType.left, id));
                 views.setOnClickPendingIntent(R.id.button_right, getClickIntent(context, ClickType.right, id));
@@ -68,10 +68,7 @@ public class RSSWidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(id, views);
             if(channel == null) {
                 NetworkService.scheduleUpdate(context, id);
-                L.d("schedule " + id);
             }
-
-            L.d(channel == null ? "channel null" : channel.getItems().size() + "");
         }
     }
 
@@ -83,13 +80,13 @@ public class RSSWidgetProvider extends AppWidgetProvider {
             if(id == AppWidgetManager.INVALID_APPWIDGET_ID) {
                 return;
             }
-            L.d("put for id: " + id);
+
             mChannels.put(id, channel);
             handleUpdate(context);
         } else if (ACTION_RSS_WIDGET_BUTTON_CLICK.equals(intent.getAction())) {
             final String extraType = intent.getStringExtra(EXTRA_CLICK_TYPE);
             final int id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-            L.d("click type: " + extraType);
+
             if (TextUtils.isEmpty(extraType) || id == AppWidgetManager.INVALID_APPWIDGET_ID) {
                 return;
             }
@@ -127,18 +124,8 @@ public class RSSWidgetProvider extends AppWidgetProvider {
         final int[] ids = getWidgetsIds(context);
         for (int id : ids) {
             NetworkService.scheduleUpdate(context, id);
-            L.d("schedule " + id);
         }
 
-    }
-
-
-    @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
-        final int[] ids = getWidgetsIds(context);
-        for (int id : ids) {
-            NetworkService.clearUpdate(context, id);
-        }
     }
 
     @Override
@@ -154,6 +141,10 @@ public class RSSWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onDisabled(Context context) {
+        final int[] ids = getWidgetsIds(context);
+        for (int id : ids) {
+            NetworkService.clearUpdate(context, id);
+        }
 
         final RSSWidgetApplication application = (RSSWidgetApplication) context.getApplicationContext();
         application.flushCache();
@@ -174,7 +165,6 @@ public class RSSWidgetProvider extends AppWidgetProvider {
         final Intent intent = new Intent(context, RSSWidgetProvider.class);
         intent.setAction(ACTION_RSS_WIDGET_BUTTON_CLICK);
         intent.putExtra(EXTRA_CLICK_TYPE, type.name());
-        L.d("get intent " + type.name());
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id);
         return PendingIntent.getBroadcast(context, id * 10 + type.ordinal(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
